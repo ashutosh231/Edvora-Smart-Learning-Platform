@@ -35,7 +35,7 @@ const {
   createSubsection,
   updateSubsection,
   deleteSubsection,
-} = require("../controllers/Subsection")
+} = require("../controllers/subsection")
 
 // Rating Controllers Import
 const {

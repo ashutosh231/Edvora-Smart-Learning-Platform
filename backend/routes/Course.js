@@ -38,7 +38,7 @@ import {
 // Import the required modules
 import express from "express";
 // Course Progress Controller
-import { updateCourseProgress } from "../controllers/courseProgress.js";
+import { updateCourseProgress } from "../controllers/CourseProgress.js";
 
 const router = express.Router();
 

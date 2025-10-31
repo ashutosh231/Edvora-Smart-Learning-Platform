@@ -13,3 +13,4 @@ export const connect = () => {
       process.exit(1);
     });
 };
+

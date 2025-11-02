@@ -42,10 +42,10 @@ function Home() {
 
         {/* CTA Buttons */}
         <div className="mt-8 flex flex-row gap-7">
-          <CTAButton active={true} linkto={"/signup"}>
+          <CTAButton active={true} linkto={"/all-courses"}>
             Learn More
           </CTAButton>
-          <CTAButton active={false} linkto={"/login"}>
+          <CTAButton active={false} linkto={"/contact"}>
             Book a Demo
           </CTAButton>
         </div>
@@ -83,7 +83,7 @@ function Home() {
           }}
           ctabtn2={{
             btnText: "Learn More",
-            link: "/signup",
+            link: "/all-courses",
             active: false,
           }}
           codeColor={"text-yellow-25"}
@@ -104,12 +104,12 @@ function Home() {
           }
           ctabtn1={{
             btnText: "Continue Lesson",
-            link: "/signup",
+            link: "/dashboard/enrolled-courses",
             active: true,
           }}
           ctabtn2={{
             btnText: "Learn More",
-            link: "/signup",
+            link: "/all-courses",
             active: false,
           }}
           codeColor={"text-white"}
@@ -128,13 +128,13 @@ function Home() {
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
             <div className="lg:h-[150px]"></div>
             <div className="flex flex-row gap-7 text-white lg:mt-8">
-              <CTAButton active={true} linkto={"/signup"}>
+              <CTAButton active={true} linkto={"/all-courses"}>
                 <div className="flex items-center gap-2">
                   Explore Full Catalog
                   <FaArrowRight />
                 </div>
               </CTAButton>
-              <CTAButton active={false} linkto={"/login"}>
+              <CTAButton active={false} linkto={"/all-courses"}>
                 Learn More
               </CTAButton>
             </div>
@@ -153,7 +153,7 @@ function Home() {
                 The modern Edvora dictates its own terms. Today, to be a
                 competitive specialist requires more than professional skills.
               </div>
-              <CTAButton active={true} linkto={"/signup"}>
+              <CTAButton active={true} linkto={"/all-courses"}>
                 <div>Learn More</div>
               </CTAButton>
             </div>

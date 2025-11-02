@@ -44,13 +44,13 @@ export default function MyProfile() {
               </p>
             </div>
           </div>
-          <IconBtn
+          {/* <IconBtn
             text="Edit Profile"
             onclick={() => navigate("/dashboard/settings")}
             customClasses="transform transition-transform duration-300 hover:scale-105"
           >
             <RiEditBoxLine size={22} className="transition-transform duration-300 group-hover:rotate-12" />
-          </IconBtn>
+          </IconBtn> */}
         </div>
       </div>
 
@@ -95,13 +95,13 @@ export default function MyProfile() {
               <p className="text-2xl font-semibold text-richblack-5 mb-2">Personal Details</p>
               <p className="text-sm text-richblack-400">Your basic information</p>
             </div>
-            <IconBtn
+            {/* <IconBtn
               text="Edit"
               onclick={() => navigate("/dashboard/settings")}
               customClasses="transform transition-transform duration-300 hover:scale-105"
             >
               <RiEditBoxLine size={20} />
-            </IconBtn>
+            </IconBtn> */}
           </div>
 
           <div className="grid grid-cols-1 gap-6">

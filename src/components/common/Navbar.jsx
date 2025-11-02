@@ -56,19 +56,18 @@ const Navbar = () => {
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         
         {/* Logo Section */}
-        <Link to="/" className="group flex items-center gap-3">
-          <div className="relative">
-            <img
-              src={logo}
-              width={200}
-              height={50}
-              loading="lazy"
-              alt="Edvora"
-              className="transition-all duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-purple-400/0 to-pink-400/0 group-hover:from-blue-400/20 group-hover:via-purple-400/20 group-hover:to-pink-400/20 rounded-lg transition-all duration-500 blur-sm group-hover:blur-md"></div>
-          </div>
-        </Link>
+      <Link to="/" className="group flex items-center gap-3">
+  <div className="relative">
+    <img
+      src={logo}
+      width={200}
+      height={50}
+      loading="lazy"
+      alt="Edvora"
+      className="transition-all duration-300 group-hover:scale-105 filter brightness-0 invert opacity-90 group-hover:opacity-100"
+    />
+  </div>
+</Link>
 
         {/* Navigation Links */}
         <nav className="hidden lg:block">

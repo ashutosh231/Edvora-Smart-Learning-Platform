@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ACCOUNT_TYPE } from './utils/constants'
 import About from './pages/About'
 import AddCourse from './components/core/Dashboard/AddCourse'
+import AllCourses from './pages/AllCourses'
 import Cart from './components/core/Dashboard/Cart/Cart'
 import Catalog from './pages/Catalog'
 import Contact from './pages/ContactUs'
 import ContactUs from './pages/ContactUs'
+import CookiePolicy from './pages/CookiePolicy'
 import CourseDetail from './pages/CourseDetail'
 import CourseDetails from './pages/CourseDetail'
 import Dashboard from './pages/Dashboard'
@@ -23,10 +25,12 @@ import MyCourses from './components/core/Dashboard/MyCourses'
 import MyProfile from './components/core/Dashboard/MyProfile'
 import Navbar from './components/common/Navbar'
 import OpenRoute from './components/core/Auth/OpenRoute'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import PrivateRoute from './components/core/Auth/PrivateRoute'
 import React from 'react'
 import Settings from './components/core/Dashboard/Settings/ index'
 import Signup from './pages/Signup'
+import Terms from './pages/Terms'
 import UpdatePassword from './pages/UpdatePassword'
 import VerifyEmail from './pages/VerifyEmail'
 import VideoDetails from './components/core/ViewCourse/VideoDetails'
@@ -159,7 +163,10 @@ function App() {
 
       </Route>
 
-
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="cookie-policy" element={<CookiePolicy />} />
+<Route path="/terms" element={<Terms/>} />
+<Route path="all-courses" element={<AllCourses/>} />
 
     <Route path="*" element={<Error />} />
 

@@ -1,51 +1,36 @@
-import babelParser from "@babel/eslint-parser"; // ✅ Use ESM import instead of require
-import globals from "globals";
-import js from "@eslint/js";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
+import globals from "globals"
+// eslint.config.js
+import js from "@eslint/js"
+import react from "eslint-plugin-react"
+import reactHooks from "eslint-plugin-react-hooks"
 
 export default [
   js.configs.recommended,
   {
-    files: ["src/**/*.{js,jsx}"],
-    ignores: ["node_modules", "dist", "build"],
+    files: ["**/*.{js,jsx}"],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: "latest",
       sourceType: "module",
-      parser: babelParser, // ✅ Fix: ESM-compatible import
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          presets: ["@babel/preset-react"],
-        },
-      },
       globals: {
         ...globals.browser,
-        process: true,
+        ...globals.node,
       },
     },
     plugins: {
       react,
-      "react-hooks": reactHooks,
+      "react-hooks": reactHooks, // ✅ explicit import fixes your issue
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn", // ✅ now defined properly
     },
     settings: {
       react: {
         version: "detect",
       },
     },
-    rules: {
-      // ✅ React best practices
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-
-      // ✅ Hooks rules
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-
-      // ✅ General cleanup
-      "no-unused-vars": "warn",
-      eqeqeq: "error",
-      "no-undef": "off",
-    },
   },
-];
+]

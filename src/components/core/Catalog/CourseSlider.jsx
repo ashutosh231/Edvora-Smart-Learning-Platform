@@ -9,7 +9,7 @@ import { BsFire, BsShieldCheck } from 'react-icons/bs'
 import { FiArrowLeft, FiArrowRight, FiStar } from 'react-icons/fi'
 import { Swiper, SwiperSlide } from "swiper/react"
 
-import Course_Card from './Course_Card'
+import CourseCard from './CourseCard'
 import { IoRibbon } from 'react-icons/io5'
 import React from 'react'
 import { motion } from 'framer-motion'
@@ -101,7 +101,7 @@ const CourseSlider = ({ Courses, title, subtitle }) => {
             {Courses?.map((course, i) => (
               <SwiperSlide key={i}>
                 <div className="h-full pb-4">
-                  <Course_Card course={course} Height={"h-[180px]"} index={i} />
+                  <CourseCard course={course} Height={"h-[180px]"} index={i} />
                 </div>
               </SwiperSlide>
             ))}

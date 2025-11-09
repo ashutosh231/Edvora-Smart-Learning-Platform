@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import CourseCard from '../components/core/Catalog/CourseCard';
 import CourseSlider from '../components/core/Catalog/CourseSlider';
-import Course_Card from '../components/core/Catalog/Course_Card';
 import Error from "./Error"
 import Footer from '../components/common/Footer'
 import { apiConnector } from '../services/apiConnector';
@@ -147,7 +147,7 @@ const Catalog = () => {
                 {catalogPageData?.data?.mostSellingCourses
                   ?.slice(0, 4)
                   .map((course, i) => (
-                    <Course_Card course={course} key={i} Height={"h-[400px]"} />
+                    <CourseCard course={course} key={i} Height={"h-[400px]"} />
                   ))}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { FiAlertCircle, FiArrowRight, FiCheckCircle, FiClock, FiFacebook, FiHeart, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiMessageSquare, FiPhone, FiSend, FiStar, FiTwitter, FiUser, FiYoutube } from "react-icons/fi"
+import { FiAlertCircle, FiArrowRight, FiCheckCircle, FiClock, FiFacebook, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiMessageSquare, FiPhone, FiSend, FiStar, FiTwitter, FiUser, FiYoutube } from "react-icons/fi"
 import React, { useEffect, useState } from "react"
 
 import CountryCode from "../data/countrycode.json"
@@ -427,13 +427,13 @@ const ContactUs = () => {
                       { icon: <FiLinkedin className="text-xl" />, color: "hover:bg-blue-700/20" },
                       { icon: <FiYoutube className="text-xl" />, color: "hover:bg-red-500/20" }
                     ].map((social, index) => (
-                      <a 
+                      <button 
                         key={index} 
                         href="#" 
                         className={`bg-richblack-700 p-3 rounded-full transition-all duration-300 ${social.color} hover:scale-110 hover:shadow-lg`}
                       >
                         {social.icon}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 </div>

@@ -2,7 +2,6 @@ import { BsGraphUp, BsPeople } from 'react-icons/bs'
 import { FiBook, FiDollarSign, FiPlus, FiTrendingUp, FiUsers } from 'react-icons/fi'
 import React, { useEffect, useState } from 'react'
 
-// import { FaIndianRupeeSign } from "react-icons/fa6";
 import InstructorChart from './InstructorChart'
 import { Link } from 'react-router-dom'
 import { fetchInstructorCourses } from '../../../services/operations/courseDetailsAPI'

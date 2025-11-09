@@ -19,7 +19,7 @@ import { motion } from 'framer-motion'
 import { use } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Course_Card = ({ course, Height, index }) => {
+const CourseCard = ({ course, Height, index }) => {
   const [avgReviewCount, setAvgReviewCount] = useState(0)
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -224,4 +224,4 @@ const Course_Card = ({ course, Height, index }) => {
   )
 }
 
-export default Course_Card
+export default CourseCard

@@ -2,7 +2,7 @@
 import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../apis"
 import { toast } from "react-hot-toast"
-import { updateCompletedLectures } from "../../slices/viewCourseSlice"
+// import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 
 const {
   COURSE_DETAILS_API,

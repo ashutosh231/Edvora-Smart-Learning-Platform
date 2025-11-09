@@ -1,4 +1,3 @@
-import React from 'react'
 import { apiConnector } from "../apiConnector";
 import { catalogData } from '../apis';
 import {toast} from "react-hot-toast"

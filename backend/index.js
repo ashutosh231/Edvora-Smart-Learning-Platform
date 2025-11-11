@@ -111,8 +111,8 @@ connect();
 // ⚠️ REMOVE ALL MANUAL res.header CORS CODE
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://localhost:3000/",
-  "edvora-beryl.vercel.app", // deployed frontend (Vercel)
+  // "http://localhost:3000/",
+  "https://edvora-beryl.vercel.app", // deployed frontend (Vercel)
 ];
 
 app.use(

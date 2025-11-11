@@ -19,7 +19,7 @@ export const auth = async (req, res, next) => {
         message: "Token is missing or malformed",
       });
     }
-
+2
     const token = authHeader.split(" ")[1]; // Extract actual token
 
     // Verify token

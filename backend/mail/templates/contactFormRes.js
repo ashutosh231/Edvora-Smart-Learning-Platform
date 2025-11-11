@@ -74,7 +74,7 @@ export const contactUsEmail = (
     
     <body>
         <div class="container">
-            <a href="https://Edvora-edtech-project.vercel.app"><img class="logo"
+            <a href="https://edvora-beryl.vercel.app/"><img class="logo"
                     src="https://res.cloudinary.com/drutopmty/image/upload/v1761982210/EdvoraFinal_d8pv0u.png" alt="Edvora Logo"></a>
             <div class="message">Contact Form Confirmation</div>
             <div class="body">

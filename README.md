@@ -13,28 +13,41 @@ Password: 123456
 StudyNotion is a fully functional EdTech platform that enables users to create, consume, and rate educational content. The platform is built using the MERN stack, which includes ReactJS, NodeJS, MongoDB, and ExpressJS.
 
 ## Table of Contents
-
-- [Introduction](#introduction)
-- [System Architecture](#system-architecture)
-  - [Front-end](#front-end)
-  - [Back-end](#back-end)
-  - [Database](#database)
-  - [Architecture Diagram](#architecture-diagram)
-- [API Design](#api-design)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
+📚 Table of Contents
+Introduction
+Key Features
+System Architecture
+Front-end
+Back-end
+Database
+Architecture Diagram
+AI Virtual Teacher
+API Design
+Installation
+Configuration
+Usage
+Future Enhancements
 
 
 ## Introduction
 
-StudyNotion aims to provide a seamless and interactive learning experience for students, making education more accessible and engaging. Additionally, the platform serves as a platform for instructors to showcase their expertise and connect with learners across the globe.
-
-In the following sections, we will cover the technical details of the platform, including the system architecture, API design, installation, usage instructions, and potential future enhancements.
-
+Edvora aims to revolutionize digital learning through interactive content, personalized teaching, and a seamless student-instructor ecosystem.
+The platform is designed to:
+Provide students with high-quality courses, progress tracking, and AI-powered tutoring.
+Offer instructors the tools to build, manage, and sell courses globally.
+Deliver simplified navigation, fast loading, and mobile-friendly learning.
 ## System Architecture
 
 The StudyNotion EdTech platform consists of three main components: the front-end, the back-end, and the database. The platform follows a client-server architecture, with the front-end serving as the client and the back-end and database serving as the server.
+
+###🌟 Key Features
+👨‍🏫 Virtual AI Teacher (Highlight Feature)
+Students can enter any topic.
+The system generates:
+A teaching video delivered by a virtual educator
+A complete transcript or written explanation
+Helps learners understand concepts instantly.
+Supports all subjects — from programming to math to OS fundamentals.
 
 ### Front-end
 
@@ -111,6 +124,15 @@ Below is a high-level diagram that illustrates the architecture of the StudyNoti
 The StudyNotion platform's API is designed following the REST architectural style. The API is implemented using Node.js and Express.js. It uses JSON for data exchange and follows standard HTTP request methods such as GET, POST, PUT, and DELETE.
 
 For detailed API documentation and endpoints, refer to the [API Documentation](/api-docs).
+🧩 API Design
+StudyNotion uses REST APIs with standard HTTP methods:
+Action	Method	Endpoint
+Register User	POST	/auth/register
+Login User	POST	/auth/login
+Get All Courses	GET	/courses
+Create Course	POST	/courses/create
+AI Teacher	POST	/ai/teacher
+Checkout	POST	/payment/checkout
 
 ## Installation
 
@@ -123,14 +145,25 @@ For detailed API documentation and endpoints, refer to the [API Documentation](/
 1. Set up a MongoDB database and obtain the connection URL.
 2. Create a `.env` file in the root directory with the following environment variables:
    ```
-   MONGODB_URI=<your-mongodb-connection-url>
-   JWT_SECRET=<your-jwt-secret-key>
+   MONGODB_URI=your-mongodb-url
+JWT_SECRET=your-jwt-secret
+CLOUD_NAME=your-cloudinary-cloud-name
+API_KEY=your-cloudinary-api-key
+API_SECRET=your-cloudinary-api-secret
+RAZORPAY_KEY_ID=your-razorpay-key-id
+RAZORPAY_SECRET=your-razorpay-secret
+MAIL_USER=your-email
+MAIL_PASS=your-app-password
+GROQ_API_KEY=your-groq-key
+DID_API_KEY=your-did-key
+DID_AVATAR_URL=avatar-image-url
+
    ```
 
 ## Usage
 
-1. Start the server: `npm start`
-2. Open a new terminal and navigate to the `client` directory: `cd client`
+1. Start the server: `npm run dev`
+2. Open a new terminal and navigate to the `client` directory: `cd client` or you can directly run in npm run dev in root folder 
 3. Start the React development server: `npm start`
 
 Access the application in your browser at `http://localhost:3000`.

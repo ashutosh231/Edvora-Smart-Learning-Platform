@@ -270,8 +270,11 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
+import { motion } from "framer-motion"
 
 import { BiInfoCircle } from "react-icons/bi"
+import { BsPeople, BsStarFill } from "react-icons/bs"
+import { IoSparkles } from "react-icons/io5"
 import ConfirmationModal from "../components/common/ConfirmationModal"
 import CourseAccordionBar from "../components/core/Course/CourseAccordionBar"
 import CourseDetailsCard from "../components/core/Course/CourseDetailsCard"
@@ -392,8 +395,53 @@ function CourseDetails() {
   }
 
   return (
-    <>
-      <div className="relative w-full bg-richblack-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-900 text-white overflow-hidden relative">
+      {/* Enhanced Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Floating Orbs */}
+        <motion.div
+          className="absolute top-20 left-20 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full blur-3xl"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-gradient-to-r from-yellow-500/25 to-orange-500/25 rounded-full blur-3xl"
+          animate={{
+            x: [0, -80, 0],
+            y: [0, -60, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Animated Light Rays */}
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={`ray-${i}`}
+            className="absolute w-1 h-96 bg-gradient-to-b from-yellow-400/20 via-transparent to-transparent"
+            style={{
+              left: `${20 + i * 20}%`,
+              top: '-50%',
+              transformOrigin: 'bottom center',
+            }}
+            animate={{
+              rotate: [0, 360],
+              opacity: [0.1, 0.4, 0.1],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative w-full z-10">
         {/* Hero Section */}
         <div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative">
           <div className="mx-auto grid min-h-[450px] max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[810px]">
@@ -406,27 +454,107 @@ function CourseDetails() {
               />
             </div>
 
-            <div className="z-30 my-5 flex flex-col justify-center gap-4 py-5 text-lg text-richblack-5">
-              <p className="text-4xl font-bold sm:text-[42px]">{courseName}</p>
-              <p className="text-richblack-200">{courseDescription}</p>
+            <motion.div 
+              className="z-30 my-5 flex flex-col justify-center gap-4 py-5 text-lg relative w-full"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <motion.p 
+                className="text-4xl font-black sm:text-[42px] bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                {courseName}
+              </motion.p>
+              
+              <motion.p 
+                className="text-slate-300 text-lg leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                {courseDescription}
+              </motion.p>
 
-              <div className="text-md flex flex-wrap items-center gap-2">
-                <span className="text-yellow-25">{avgReviewCount}</span>
-                <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews?.length || 0} reviews)`}</span>
-                <span>{`${studentsEnrolled?.length || 0} students enrolled`}</span>
-              </div>
+              {/* Enhanced Rating Section */}
+              <motion.div 
+                className="flex flex-wrap items-center gap-4 p-4 rounded-2xl backdrop-blur-xl"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 4px 16px 0 rgba(31, 38, 135, 0.2)',
+                }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <div className="flex items-center gap-2">
+                  <BsStarFill className="text-yellow-400 text-xl" />
+                  <span className="text-yellow-400 font-bold text-lg">{avgReviewCount}</span>
+                </div>
+                <RatingStars Review_Count={avgReviewCount} Star_Size={20} />
+                <span className="text-slate-300">{`(${ratingAndReviews?.length || 0} reviews)`}</span>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <BsPeople className="text-purple-400" />
+                  <span>{`${studentsEnrolled?.length || 0} students enrolled`}</span>
+                </div>
+              </motion.div>
 
-              <p>Created By {`${instructor.firstName} ${instructor.lastName}`}</p>
-              <div className="flex flex-wrap gap-5 text-lg">
-                <p className="flex items-center gap-2">
-                  <BiInfoCircle /> Created at {formatDate(createdAt)}
+              {/* Instructor Info */}
+              <motion.div
+                className="flex items-center gap-3 p-4 rounded-2xl backdrop-blur-xl"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  <IoSparkles className="text-yellow-400 text-xl" />
+                </motion.div>
+                <p className="text-white">
+                  Created By <span className="text-yellow-400 font-semibold">{`${instructor.firstName} ${instructor.lastName}`}</span>
                 </p>
-                <p className="flex items-center gap-2">
-                  <HiOutlineGlobeAlt /> English
-                </p>
-              </div>
-            </div>
+              </motion.div>
+
+              {/* Course Meta */}
+              <motion.div 
+                className="flex flex-wrap gap-4 text-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <motion.p 
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <BiInfoCircle className="text-cyan-400" /> 
+                  <span className="text-slate-300">Created at {formatDate(createdAt)}</span>
+                </motion.p>
+                <motion.p 
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <HiOutlineGlobeAlt className="text-purple-400" /> 
+                  <span className="text-slate-300">English</span>
+                </motion.p>
+              </motion.div>≠≠≠≠≠
+            </motion.div>
 
             {/* Mobile Course Card */}
             <div className="flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden">
@@ -449,71 +577,206 @@ function CourseDetails() {
             />
           </div>
         </div>
-      </div>
 
-      {/* What You Will Learn */}
-      <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]">
-        <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]">
-          <div className="my-8 border border-richblack-600 p-8">
-            <p className="text-3xl font-semibold">What you'll learn</p>
-            <div className="mt-5">
+        {/* Enhanced What You Will Learn Section */}
+        <div className="mx-auto box-content px-4 lg:w-[1260px] relative z-10 pt-8 pb-6">
+        <div className="max-w-maxContentTab lg:mx-0 xl:max-w-[810px] space-y-6">
+          <motion.div 
+            className="p-4 md:p-5 rounded-xl backdrop-blur-xl relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.18)',
+              boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Animated Gradient Border */}
+            <motion.div
+              className="absolute -inset-1 bg-gradient-to-r from-purple-600/40 via-yellow-500/40 to-cyan-500/40 rounded-xl blur-xl"
+              animate={{
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            
+            <motion.p 
+              className="text-lg md:text-xl font-black mb-2 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent relative z-10"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              What you'll learn
+            </motion.p>
+            <motion.div 
+              className="text-slate-200 relative z-10 prose prose-invert max-w-none prose-base"
+              style={{
+                fontSize: '1rem',
+                lineHeight: '1.6',
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <ReactMarkdown>{whatYouWillLearn}</ReactMarkdown>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Course Content */}
-          <div className="max-w-[830px]">
-            <div className="flex flex-col gap-3">
-              <p className="text-[28px] font-semibold">Course Content</p>
-              <div className="flex flex-wrap justify-between gap-2">
-                <div className="flex gap-2">
-                  <span>{courseContent?.length || 0} section(s)</span>
-                  <span>{totalNoOfLectures} lecture(s)</span>
-                  <span>{response.data?.totalDuration || "N/A"} total length</span>
+          {/* Enhanced Course Content Section */}
+          <motion.div 
+            className="flex flex-col gap-2 p-4 md:p-5 rounded-xl backdrop-blur-xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.18)',
+              boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+              <motion.p 
+                className="text-lg md:text-xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Course Content
+              </motion.p>
+              <div className="flex flex-wrap justify-between gap-2 items-center">
+                <div className="flex flex-wrap gap-1.5">
+                  <motion.span 
+                    className="px-2 py-1 rounded-lg backdrop-blur-xl text-xs"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {courseContent?.length || 0} section(s)
+                  </motion.span>
+                  <motion.span 
+                    className="px-2 py-1 rounded-lg backdrop-blur-xl text-xs"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {totalNoOfLectures} lecture(s)
+                  </motion.span>
+                  <motion.span 
+                    className="px-2 py-1 rounded-lg backdrop-blur-xl text-xs"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {response.data?.totalDuration || "N/A"} total length
+                  </motion.span>
                 </div>
-                <button className="text-yellow-25" onClick={() => setIsActive([])}>
+                <motion.button 
+                  className="px-2.5 py-1 rounded-lg backdrop-blur-xl text-yellow-400 font-semibold text-xs"
+                  style={{
+                    background: 'rgba(234, 179, 8, 0.1)',
+                    border: '1px solid rgba(234, 179, 8, 0.3)',
+                  }}
+                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(234, 179, 8, 0.2)' }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsActive([])}
+                >
                   Collapse all sections
-                </button>
+                </motion.button>
               </div>
-            </div>
 
-            {/* Accordion */}
-            <div className="py-4">
-              {courseContent?.map((course, index) => (
-                <CourseAccordionBar
-                  key={index}
-                  course={course}
-                  isActive={isActive}
-                  handleActive={handleActive}
-                />
-              ))}
-            </div>
-
-            {/* Author Details */}
-            <div className="mb-12 py-4">
-              <p className="text-[28px] font-semibold">Author</p>
-              <div className="flex items-center gap-4 py-4">
-                <img
-                  src={
-                    instructor.image ||
-                    `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
-                  }
-                  alt="Author"
-                  className="h-14 w-14 rounded-full object-cover"
-                />
-                <p className="text-lg">{`${instructor.firstName} ${instructor.lastName}`}</p>
+              {/* Accordion */}
+              <div className="py-3 mt-3">
+                {courseContent?.map((course, index) => (
+                  <CourseAccordionBar
+                    key={index}
+                    course={course}
+                    isActive={isActive}
+                    handleActive={handleActive}
+                  />
+                ))}
               </div>
-              <p className="text-richblack-50">
+            </motion.div>
+
+          {/* Enhanced Author Details Section */}
+          <motion.div 
+            className="p-4 md:p-5 rounded-xl backdrop-blur-xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.18)',
+              boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+              <motion.p 
+                className="text-lg md:text-xl font-black mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Author
+              </motion.p>
+              <motion.div 
+                className="flex items-center gap-2 py-1.5"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <motion.div
+                  className="relative"
+                  whileHover={{ scale: 1.05, rotate: 5 }}
+                >
+                  <motion.img
+                    src={
+                      instructor.image ||
+                      `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+                    }
+                    alt="Author"
+                    className="h-10 w-10 rounded-full object-cover border-2 border-yellow-400/50"
+                    style={{
+                      boxShadow: '0 0 15px rgba(234, 179, 8, 0.5)',
+                    }}
+                  />
+                  <motion.div
+                    className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-purple-400 rounded-full blur opacity-50"
+                    animate={{
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                    }}
+                  />
+                </motion.div>
+                <p className="text-sm md:text-base font-black text-white">{`${instructor.firstName} ${instructor.lastName}`}</p>
+              </motion.div>
+              <motion.p 
+                className="text-slate-300 leading-relaxed text-xs"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 {instructor?.additionalDetails?.about}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </div>
         </div>
+      
+        <Footer />
+        {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
       </div>
-
-      <Footer />
-      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
-    </>
+    </div>
   )
 }
 

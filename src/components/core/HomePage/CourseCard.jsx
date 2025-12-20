@@ -2,33 +2,65 @@
 import { HiUsers } from "react-icons/hi";
 import { ImTree } from "react-icons/im";
 import React from "react";
+import { motion } from "framer-motion";
 
 const CourseCard = ({cardData, currentCard, setCurrentCard}) => {
+  const isActive = currentCard === cardData?.heading;
+  
   return (
-    <div
-      className={`w-[360px] lg:w-[30%] ${
-        currentCard === cardData?.heading
+    <motion.div
+      className={`relative w-[320px] sm:w-[360px] md:w-[380px] ${
+        isActive
           ? "bg-white shadow-[12px_12px_0_0] shadow-yellow-50"
-          : "bg-richblack-800"
-      }  text-richblack-25 h-[300px] box-border cursor-pointer`}
+          : "bg-richblack-800/80 backdrop-blur-sm border border-richblack-700/50"
+      } text-richblack-25 h-[320px] md:h-[340px] lg:h-[360px] box-border cursor-pointer rounded-lg overflow-hidden group`}
       onClick={() => setCurrentCard(cardData?.heading)}
+      whileHover={{ scale: 1.05, y: -8 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300 }}
     >
-      <div className="border-b-[2px] border-richblack-400 border-dashed h-[80%] p-6 flex flex-col gap-3">
+      {/* Light Effect on Hover */}
+      {!isActive && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-yellow-50/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+        />
+      )}
+      
+      {/* Glow Border Effect for Active Card */}
+      {isActive && (
+        <motion.div
+          className="absolute -inset-0.5 bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-50 rounded-lg blur-sm opacity-50"
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      )}
+      
+      <div className={`relative z-10 border-b-[2px] border-dashed h-[80%] p-6 md:p-8 flex flex-col gap-3 md:gap-4 ${
+        isActive ? "border-richblack-300" : "border-richblack-400"
+      }`}>
         <div
-          className={` ${
-            currentCard === cardData?.heading && "text-richblack-800"
-          } font-semibold text-[20px]`}
+          className={`font-semibold text-[20px] md:text-[22px] lg:text-[24px] ${
+            isActive ? "text-richblack-900" : "text-richblack-5"
+          }`}
         >
           {cardData?.heading}
         </div>
 
-        <div className="text-richblack-400">{cardData?.description}</div>
+        <div className={`text-sm md:text-base leading-relaxed ${
+          isActive ? "text-richblack-600" : "text-richblack-400"
+        }`}>
+          {cardData?.description}
+        </div>
       </div>
 
       <div
-        className={`flex justify-between ${
-          currentCard === cardData?.heading ? "text-blue-300" : "text-richblack-300"
-        } px-6 py-3 font-medium`}
+        className={`relative z-10 flex justify-between ${
+          isActive ? "text-blue-600 bg-richblack-50" : "text-richblack-300 bg-richblack-900/30 backdrop-blur-sm"
+        } px-6 py-3 font-medium rounded-b-lg`}
       >
         {/* Level */}
         <div className="flex items-center gap-2 text-[16px]">
@@ -42,7 +74,7 @@ const CourseCard = ({cardData, currentCard, setCurrentCard}) => {
           <p>{cardData?.lessionNumber} Lession</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,6 @@
-import { BookOpen, ChevronDown, HelpCircle, Lightbulb, MessageCircle, Play, Send, Sparkles, Users } from "lucide-react";
+import { BookOpen, ChevronDown, HelpCircle, Lightbulb, MessageCircle, Play, Send, Sparkles, Users, Brain, Zap, Cpu, Database } from "lucide-react";
 import React, { useState } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 export default function VirtualTeacher() {
@@ -95,8 +95,10 @@ export default function VirtualTeacher() {
         }
       }, 3000);
     } catch (err) {
-      console.error(err);
-      alert("Insufficent credit ");
+      console.error("Video generation error:", err?.response?.data || err.message);
+      const backendMsg = err?.response?.data?.error || err?.message || "Something went wrong";
+      alert(backendMsg);
+      setProgress(backendMsg);
       setLoading(false);
     }
   };
@@ -122,49 +124,154 @@ export default function VirtualTeacher() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Floating AI Neural Network Pattern */}
+        <motion.div
+          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-3xl"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl"
+          animate={{
+            x: [0, -40, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        
+        {/* Floating Particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-purple-400/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.6, 0.2],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Enhanced Header with Glass Morphism */}
-      <div className="bg-gradient-to-r from-purple-900/80 via-blue-900/80 to-indigo-900/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex items-center gap-4 mb-3">
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl shadow-lg">
-              <Sparkles size={32} className="text-white" />
-            </div>
+      <motion.div 
+        className="relative backdrop-blur-xl bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-indigo-900/30 border-b border-white/10 shadow-2xl"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-8 relative">
+          {/* Animated glow effect */}
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-cyan-500/10"
+            animate={{
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+          
+          <div className="flex items-center gap-4 mb-3 relative z-10">
+            <motion.div 
+              className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl shadow-lg relative overflow-hidden"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                animate={{
+                  x: ["-100%", "100%"],
+                }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+              />
+              <Brain size={32} className="text-white relative z-10" />
+            </motion.div>
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              <motion.h1 
+                className="text-4xl font-bold bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
                 Virtual AI Teacher
-              </h1>
-              <p className="text-blue-200/80 mt-1 font-light">Learn any topic with personalized AI-generated videos</p>
+              </motion.h1>
+              <motion.p 
+                className="text-blue-200/80 mt-1 font-light flex items-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                <Cpu size={16} className="text-cyan-400" />
+                Learn any topic with personalized AI-generated videos
+              </motion.p>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Enhanced Input Section */}
-        <div className="bg-gray-800/60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 mb-8 border border-white/10 hover:border-white/20 transition-all duration-300">
-          <label className="block font-semibold text-white mb-4 text-lg flex items-center gap-3">
-            <Lightbulb size={24} className="text-yellow-400" />
-            What would you like to learn today?
-          </label>
+      <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
+        {/* Redesigned Input Section - Clean & Functional */}
+        <motion.div 
+          className="bg-slate-800 rounded-3xl shadow-2xl p-8 mb-8 border border-purple-500/30"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-yellow-500/20 rounded-lg">
+              <Lightbulb size={24} className="text-yellow-400" />
+            </div>
+            <h2 className="text-xl font-semibold text-white">
+              What would you like to learn today?
+            </h2>
+          </div>
 
-          <div className="flex gap-4">
-            <input
-              className="flex-1 bg-gray-700/80 border-2 border-gray-600 rounded-2xl p-4 text-lg text-black placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
-              placeholder="e.g., Newton's First Law, Photosynthesis, World War II... "
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleGenerate()}
-            />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                className="w-full px-5 py-4 text-lg rounded-xl border-2 border-purple-500/40 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 outline-none transition-all duration-200"
+                style={{
+                  backgroundColor: '#1e293b',
+                  color: '#ffffff',
+                  caretColor: '#ffffff',
+                }}
+                placeholder="e.g., Newton's First Law, Photosynthesis, World War II..."
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleGenerate()}
+              />
+            </div>
 
-            <button
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-10 py-4 rounded-2xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2 shadow-lg"
+            <motion.button
+              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-w-[180px]"
               onClick={handleGenerate}
               disabled={loading}
+              whileHover={{ scale: 1.02, boxShadow: "0 0 25px rgba(168, 85, 247, 0.4)" }}
+              whileTap={{ scale: 0.98 }}
             >
               {loading ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <motion.div 
+                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
                   <span>Processing...</span>
                 </>
               ) : (
@@ -173,23 +280,29 @@ export default function VirtualTeacher() {
                   <span>Generate Video</span>
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
 
+          {/* Progress Section */}
           {progress && (
-            <div className="mt-6 p-4 bg-gray-700/80 backdrop-blur-sm rounded-xl border border-white/10">
-              <p className="text-sm text-blue-300 font-medium mb-2">{progress}</p>
-              <div className="w-full bg-gray-600 rounded-full h-2">
-                <div
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500"
-                  style={{
-                    width: `${Math.min((parseInt(progress.match(/\d+/)?.[0]) || 0) / 100 * 100, 100)}%`,
+            <div className="mt-6 p-4 bg-slate-700/80 rounded-xl border border-purple-500/30">
+              <p className="text-sm text-blue-300 font-medium mb-2 flex items-center gap-2">
+                <Zap size={16} className="text-yellow-400" />
+                {progress}
+              </p>
+              <div className="w-full bg-slate-600 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ 
+                    width: `${Math.min((parseInt(progress.match(/\d+/)?.[0]) || 0) / 100 * 100, 100)}%`
                   }}
+                  transition={{ duration: 0.5 }}
                 />
               </div>
             </div>
           )}
-        </div>
+        </motion.div>
 
         {/* Enhanced Main Content */}
         {videoUrl || loading ? (

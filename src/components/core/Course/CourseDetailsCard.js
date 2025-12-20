@@ -194,52 +194,131 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col rounded-3xl bg-gradient-to-br from-richblack-800 to-richblack-900 shadow-2xl shadow-richblack-500/20 overflow-hidden border border-richblack-600/30"
+      className="flex flex-col rounded-3xl overflow-hidden relative"
+      style={{
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.18)',
+        boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+      }}
+      whileHover={{
+        boxShadow: '0 12px 48px 0 rgba(234, 179, 8, 0.3)',
+        borderColor: 'rgba(234, 179, 8, 0.4)',
+      }}
     >
-      {/* Course Image with Overlay */}
-      <div className="relative group">
-        <img
+      {/* Animated Gradient Border */}
+      <motion.div
+        className="absolute -inset-1 bg-gradient-to-r from-yellow-500/40 via-purple-500/40 to-cyan-500/40 rounded-3xl blur-xl opacity-0"
+        whileHover={{ opacity: 0.6 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      {/* Enhanced Course Image with Glassmorphism */}
+      <div className="relative group overflow-hidden">
+        <motion.img
           src={ThumbnailImage}
           alt={course?.courseName}
-          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-48 object-cover relative z-0"
+          whileHover={{ scale: 1.15 }}
+          transition={{ duration: 0.5 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-richblack-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent z-10" />
+        
+        {/* Light Overlay on Hover */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-purple-400/20 z-10"
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+        
         <motion.button
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.15, rotate: 360 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsLiked(!isLiked)}
-          className="absolute top-4 right-4 p-2 rounded-full bg-richblack-700/80 backdrop-blur-sm text-richblack-100 hover:text-red-400 transition-colors duration-200"
+          className="absolute top-4 right-4 p-3 rounded-full backdrop-blur-xl z-20"
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            boxShadow: '0 4px 16px 0 rgba(31, 38, 135, 0.2)',
+          }}
         >
-          {isLiked ? <FaHeart className="text-red-400" /> : <FaRegHeart />}
+          {isLiked ? (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 500, damping: 15 }}
+            >
+              <FaHeart className="text-red-400 text-xl" />
+            </motion.div>
+          ) : (
+            <FaRegHeart className="text-white text-xl" />
+          )}
         </motion.button>
       </div>
 
-      <div className="p-6">
-        {/* Price Section */}
+      <div className="p-6 relative z-10">
+        {/* Enhanced Price Section with Eye-Catching Animation */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+            <motion.span 
+              className="text-4xl font-black bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+              }}
+              style={{ backgroundSize: '200% auto' }}
+            >
               ₹{CurrentPrice}
-            </span>
-            <span className="text-richblack-300 line-through text-lg">
+            </motion.span>
+            <span className="text-slate-400 line-through text-lg font-semibold">
               ₹{Math.round(CurrentPrice * 1.5)}
             </span>
           </div>
-          <div className="text-sm font-semibold text-green-400 bg-green-400/20 px-3 py-1 rounded-full">
+          <motion.div 
+            className="text-sm font-black text-green-300 px-4 py-2 rounded-full backdrop-blur-xl"
+            style={{
+              background: 'rgba(34, 197, 94, 0.2)',
+              border: '1px solid rgba(34, 197, 94, 0.4)',
+              boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)',
+            }}
+            animate={{
+              scale: [1, 1.08, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+          >
             33% OFF
-          </div>
+          </motion.div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Enhanced Action Buttons with Glow */}
         <div className="flex flex-col gap-3 mb-6">
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`w-full py-4 px-6 rounded-xl font-bold text-richblack-900 transition-all duration-300 ${
+            whileHover={{ 
+              scale: 1.05, 
+              boxShadow: isEnrolled 
+                ? "0 0 30px rgba(34, 197, 94, 0.6)"
+                : "0 0 30px rgba(234, 179, 8, 0.6)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full py-4 px-6 rounded-xl font-black text-slate-900 transition-all duration-300 backdrop-blur-xl"
+            style={
               isEnrolled
-                ? "bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 shadow-lg shadow-green-500/25"
-                : "bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 shadow-lg shadow-yellow-500/25"
-            }`}
+                ? {
+                    background: 'linear-gradient(135deg, rgba(34, 197, 94, 1), rgba(16, 185, 129, 1))',
+                    boxShadow: '0 4px 20px rgba(34, 197, 94, 0.4)',
+                  }
+                : {
+                    background: 'linear-gradient(135deg, rgba(234, 179, 8, 1), rgba(251, 146, 60, 1))',
+                    boxShadow: '0 4px 20px rgba(234, 179, 8, 0.4)',
+                  }
+            }
             onClick={
               isEnrolled
                 ? () => navigate("/dashboard/enrolled-courses")
@@ -249,13 +328,13 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
             <div className="flex items-center justify-center gap-2">
               {isEnrolled ? (
                 <>
-                  <BsPlayCircle className="text-lg" />
-                  <span>Continue Learning</span>
+                  <BsPlayCircle className="text-xl" />
+                  <span className="font-black">Continue Learning</span>
                 </>
               ) : (
                 <>
-                  <BsShieldCheck className="text-lg" />
-                  <span>Buy Now</span>
+                  <BsShieldCheck className="text-xl" />
+                  <span className="font-black">Buy Now</span>
                 </>
               )}
             </div>
@@ -263,29 +342,57 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
 
           {!isEnrolled && (
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ 
+                scale: 1.05,
+                borderColor: 'rgba(255, 255, 255, 0.4)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleAddToCart}
-              className="w-full py-4 px-6 rounded-xl font-bold border-2 border-richblack-500 bg-richblack-700 text-richblack-5 hover:bg-richblack-600 hover:border-richblack-400 transition-all duration-300"
+              className="w-full py-4 px-6 rounded-xl font-bold backdrop-blur-xl text-white transition-all duration-300"
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '2px solid rgba(255, 255, 255, 0.25)',
+              }}
             >
               Add to Cart
             </motion.button>
           )}
         </div>
 
-        {/* Guarantee Badge */}
-        <div className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
-          <BsShieldCheck className="text-blue-400 text-xl" />
-          <span className="text-sm font-semibold text-richblack-5">
+        {/* Enhanced Guarantee Badge with Animation */}
+        <motion.div 
+          className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl backdrop-blur-xl"
+          style={{
+            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(168, 85, 247, 0.25))',
+            border: '1px solid rgba(59, 130, 246, 0.4)',
+            boxShadow: '0 4px 16px 0 rgba(59, 130, 246, 0.3)',
+          }}
+          whileHover={{ scale: 1.02 }}
+        >
+          <motion.div
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <BsShieldCheck className="text-blue-400 text-xl" />
+          </motion.div>
+          <span className="text-sm font-black text-white">
             30-Day Money-Back Guarantee
           </span>
-        </div>
+        </motion.div>
 
-        {/* Course Highlights */}
+        {/* Enhanced Course Highlights with Glassmorphism */}
         <div className="mb-6">
-          <h3 className="text-xl font-bold text-richblack-5 mb-4 flex items-center gap-2">
-            <BsStarFill className="text-yellow-400" />
-            This Course Includes:
+          <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              <BsStarFill className="text-yellow-400 text-xl" />
+            </motion.div>
+            <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+              This Course Includes:
+            </span>
           </h3>
           <div className="space-y-3">
             {course?.instructions?.map((item, i) => (
@@ -294,57 +401,88 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
                 key={i}
-                className="flex items-center gap-3 p-3 rounded-lg bg-richblack-700/50 hover:bg-richblack-700 transition-colors duration-200"
+                className="flex items-center gap-3 p-3 rounded-xl backdrop-blur-xl"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  borderColor: 'rgba(234, 179, 8, 0.5)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                }}
               >
-                <BsFillCaretRightFill className="text-yellow-400 flex-shrink-0" />
-                <span className="text-richblack-5 text-sm">{item}</span>
+                <BsFillCaretRightFill className="text-yellow-400 flex-shrink-0 text-lg" />
+                <span className="text-white text-sm font-medium">{item}</span>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Course Stats */}
+        {/* Enhanced Course Stats with Glassmorphism */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-richblack-700/50">
-            <MdOndemandVideo className="text-blue-400 text-lg" />
-            <div>
-              <p className="text-xs text-richblack-300">Videos</p>
-              <p className="text-sm font-semibold text-richblack-5">{totalVideos || 24}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-richblack-700/50">
-            <IoMdTime className="text-green-400 text-lg" />
-            <div>
-              <p className="text-xs text-richblack-300">Duration</p>
-              <p className="text-sm font-semibold text-richblack-5">{totalDuration || "8 hours"}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-richblack-700/50">
-            <FaUsers className="text-purple-400 text-lg" />
-            <div>
-              <p className="text-xs text-richblack-300">Students</p>
-              <p className="text-sm font-semibold text-richblack-5">{totalStudents || "1.2k"}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-richblack-700/50">
-            <FaCertificate className="text-orange-400 text-lg" />
-            <div>
-              <p className="text-xs text-richblack-300">Certificate</p>
-              <p className="text-sm font-semibold text-richblack-5">Yes</p>
-            </div>
-          </div>
+          {[
+            { icon: MdOndemandVideo, label: "Videos", value: totalVideos || 24, color: "text-blue-400" },
+            { icon: IoMdTime, label: "Duration", value: totalDuration || "8 hours", color: "text-green-400" },
+            { icon: FaUsers, label: "Students", value: totalStudents || "1.2k", color: "text-purple-400" },
+            { icon: FaCertificate, label: "Certificate", value: "Yes", color: "text-orange-400" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              className="flex items-center gap-2 p-3 rounded-xl backdrop-blur-xl"
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+              }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{
+                scale: 1.08,
+                borderColor: 'rgba(234, 179, 8, 0.5)',
+              }}
+            >
+              <stat.icon className={`${stat.color} text-lg`} />
+              <div>
+                <p className="text-xs text-slate-300 font-medium">{stat.label}</p>
+                <p className="text-sm font-black text-white">{stat.value}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Share Button */}
+        {/* Enhanced Share Button with Animation */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)',
+          }}
           whileTap={{ scale: 0.95 }}
           onClick={handleShare}
-          className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-purple-300 hover:text-purple-200 hover:border-purple-400/30 transition-all duration-300"
+          className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl backdrop-blur-xl font-bold text-purple-300 transition-all duration-300 cursor-pointer"
+          style={{
+            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.25))',
+            border: '1px solid rgba(168, 85, 247, 0.4)',
+            boxShadow: '0 4px 16px 0 rgba(168, 85, 247, 0.3)',
+          }}
         >
-          <FaShareSquare className="text-lg" />
-          <span className="font-semibold">Share this course</span>
+          <motion.div
+            animate={{ rotate: [0, 15, -15, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <FaShareSquare className="text-lg" />
+          </motion.div>
+          <span className="font-black">Share this course</span>
         </motion.button>
+        
+        {/* Shimmer Effect on Hover */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+          initial={{ x: '-100%' }}
+          whileHover={{ x: '200%' }}
+          transition={{ duration: 0.8 }}
+          style={{ pointerEvents: 'none' }}
+        />
       </div>
     </motion.div>
   )

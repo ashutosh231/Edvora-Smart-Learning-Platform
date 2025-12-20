@@ -137,10 +137,12 @@ import { BsChevronDown } from "react-icons/bs"
 import IconBtn from "../../common/IconBtn"
 import { IoIosArrowBack } from "react-icons/io"
 import { useSelector } from "react-redux"
+import { FiAward } from "react-icons/fi"
 
-export default function VideoDetailsSidebar({ setReviewModal }) {
+export default function VideoDetailsSidebar({ setReviewModal, setShowCertificateModal }) {
   const [activeStatus, setActiveStatus] = useState("")
   const [videoBarActive, setVideoBarActive] = useState("")
+  const [completionPercentage, setCompletionPercentage] = useState(0)
   const navigate = useNavigate()
   const location = useLocation()
   const { sectionId, SubsectionId } = useParams()
@@ -165,7 +167,15 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
       ]?._id
     setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)
     setVideoBarActive(activeSubsectionId)
-  }, [courseSectionData, sectionId, SubsectionId, location.pathname])
+
+    // Calculate completion percentage
+    if (totalNoOfLectures > 0) {
+      const percentage = Math.round(
+        (completedLectures?.length / totalNoOfLectures) * 100
+      )
+      setCompletionPercentage(percentage)
+    }
+  }, [courseSectionData, sectionId, SubsectionId, location.pathname, completedLectures, totalNoOfLectures])
 
   const handleAddReview = () => {
     setReviewModal(true)
@@ -191,13 +201,42 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
             customClasses="px-4 py-2 text-sm bg-yellow-50 text-richblack-900 hover:bg-yellow-200"
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full gap-3">
           <p className="text-lg font-bold text-richblack-5">
             {courseEntireData?.courseName}
           </p>
-          <p className="text-sm font-semibold text-richblack-400">
-            {completedLectures?.length} of {totalNoOfLectures} lectures completed
-          </p>
+          
+          {/* Completion Percentage Display */}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <p className="text-sm font-semibold text-richblack-300">
+                Progress
+              </p>
+              <span className="text-sm font-bold text-yellow-400">
+                {completionPercentage}%
+              </span>
+            </div>
+            <div className="w-full bg-richblack-700 rounded-full h-2 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-full rounded-full transition-all duration-500"
+                style={{ width: `${completionPercentage}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-richblack-400">
+              {completedLectures?.length} of {totalNoOfLectures} lectures
+            </p>
+          </div>
+
+          {/* Certificate Button */}
+          {completionPercentage === 100 && (
+            <button
+              onClick={() => setShowCertificateModal(true)}
+              className="flex items-center justify-center gap-2 w-full px-3 py-2 bg-yellow-50 text-richblack-900 font-semibold rounded-lg hover:bg-yellow-100 transition-all duration-200 mt-2"
+            >
+              <FiAward className="text-lg" />
+              <span>Claim Certificate</span>
+            </button>
+          )}
         </div>
       </div>
 

@@ -38,7 +38,7 @@ import {
 // Import the required modules
 import express from "express";
 // Course Progress Controller
-import { updateCourseProgress } from "../controllers/CourseProgress.js";
+import { updateCourseProgress, getProgressPercentage, claimCourseCertificate } from "../controllers/CourseProgress.js";
 
 const router = express.Router();
 
@@ -84,6 +84,10 @@ router.delete("/deleteCourse", deleteCourse);
 
 // Update Course Progress
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
+// Get Progress Percentage
+router.post("/getProgressPercentage", auth, isStudent, getProgressPercentage);
+// Claim Certificate
+router.post("/claimCertificate", auth, isStudent, claimCourseCertificate);
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

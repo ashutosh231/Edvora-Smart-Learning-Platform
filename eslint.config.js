@@ -11,6 +11,11 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
       globals: {
         ...globals.browser,
         ...globals.node,
@@ -18,14 +23,14 @@ export default [
     },
     plugins: {
       react,
-      "react-hooks": reactHooks, // ✅ explicit import fixes your issue
+      "react-hooks": reactHooks,
     },
     rules: {
       "no-unused-vars": "warn",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn", // ✅ now defined properly
+      "react-hooks/exhaustive-deps": "warn",
     },
     settings: {
       react: {

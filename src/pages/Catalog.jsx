@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 
 import CourseCard from '../components/core/Catalog/CourseCard';
-import CourseSlider from '../components/core/Catalog/CourseSlider';
 import Error from "./Error"
 import Footer from '../components/common/Footer'
 import { apiConnector } from '../services/apiConnector';
@@ -9,6 +8,8 @@ import { categories } from '../services/apis';
 import { getCatalogaPageData } from '../services/operations/pageAndComponentData';
 import { useParams } from 'react-router-dom'
 import { useSelector } from "react-redux"
+import { IoSparkles, IoRocketSharp } from "react-icons/io5"
+import { BsLightningChargeFill } from "react-icons/bs"
 
 const Catalog = () => {
 
@@ -58,10 +59,32 @@ const Catalog = () => {
     },[categoryId]);
 
 
+    // Animated background particles/
+    
+    const particlePositions = useMemo(() => {
+      return [...Array(25)].map(() => ({
+        left: Math.random() * 100 + "%",
+        top: Math.random() * 100 + "%",
+        duration: 3 + Math.random() * 3,
+        delay: Math.random() * 2,
+      }))
+    }, [])
+
     if (loading || !catalogPageData) {
         return (
-          <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-            <div className="spinner"></div>
+          <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-900 flex items-center justify-center">
+            <div
+              className="relative p-8 rounded-3xl backdrop-blur-xl"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+              }}
+            >
+              <div className="relative">
+                <div className="w-20 h-20 border-4 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin" />
+              </div>
+            </div>
           </div>
         )
       }
@@ -77,84 +100,150 @@ const Catalog = () => {
     }
     
       return (
-        <>
-          {/* Hero Section */}
-          <div className=" box-content bg-richblack-800 px-4">
-            <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
-              <p className="text-sm text-richblack-300">
-                {`Home / Catalog / `}
-                <span className="text-yellow-25">
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-900 text-white overflow-hidden relative">
+          {/* Background Elements */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            {/* Floating Orbs */}
+            <div className="absolute top-20 left-20 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-gradient-to-r from-yellow-500/25 to-orange-500/25 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl" />
+          </div>
+
+          {/* Hero Section with Glassmorphism */}
+          <div className="relative w-full z-10 pt-8 pb-12">
+            <div className="w-full px-4 md:px-6 lg:px-8 xl:px-12">
+              <div 
+                className="mx-auto max-w-7xl flex min-h-[300px] flex-col justify-center gap-6 p-8 md:p-10 rounded-3xl backdrop-blur-xl relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                }}
+              >
+                <p className="text-sm text-slate-300 relative z-10">
+                  {`Home / Catalog / `}
+                  <span className="text-yellow-400 font-semibold">
+                    {catalogPageData?.data?.selectedCategory?.name}
+                  </span>
+                </p>
+                
+                <p className="text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent relative z-10">
                   {catalogPageData?.data?.selectedCategory?.name}
-                </span>
-              </p>
-              <p className="text-3xl text-richblack-5">
-                {catalogPageData?.data?.selectedCategory?.name}
-              </p>
-              <p className="max-w-[870px] text-richblack-200">
-                {catalogPageData?.data?.selectedCategory?.description}
-              </p>
+                </p>
+                
+                <p className="max-w-3xl text-slate-300 text-lg md:text-xl leading-relaxed relative z-10">
+                  {catalogPageData?.data?.selectedCategory?.description}
+                </p>
+
+                {/* Stats Row */}
+                <div className="flex flex-wrap gap-4 mt-4 relative z-10">
+                  <div
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl hover:scale-105 transition-transform"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
+                  >
+                    <BsLightningChargeFill className="text-yellow-400 text-lg" />
+                    <span className="text-white font-bold">
+                      {catalogPageData?.data?.selectedCategory?.courses?.length || 0}+ Courses
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl hover:scale-105 transition-transform"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
+                  >
+                    <IoSparkles className="text-purple-400 text-lg" />
+                    <span className="text-white font-bold">Expert Instructors</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
     
-          {/* Section 1 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-            <div className="section_heading">Courses to get you started</div>
-            <div className="my-4 flex border-b border-b-richblack-600 text-sm">
-              <p
-                className={`px-4 py-2 ${
-                  active === 1
-                    ? "border-b border-b-yellow-25 text-yellow-25"
-                    : "text-richblack-50"
-                } cursor-pointer`}
-                onClick={() => setActive(1)}
+          {/* Section 1 with Glassmorphism */}
+          <div className="w-full px-4 md:px-6 lg:px-8 xl:px-12 relative z-10 py-8">
+            <div className="max-w-7xl mx-auto">
+              <div 
+                className="p-6 md:p-8 rounded-3xl backdrop-blur-xl mb-6"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                }}
               >
-                Most Populer
-              </p>
-              <p
-                className={`px-4 py-2 ${
-                  active === 2
-                    ? "border-b border-b-yellow-25 text-yellow-25"
-                    : "text-richblack-50"
-                } cursor-pointer`}
-                onClick={() => setActive(2)}
-              >
-                New
-              </p>
-            </div>
-            <div>
-              <CourseSlider
-                Courses={catalogPageData?.data?.selectedCategory?.courses}
-              />
-            </div>
-          </div>
-          {/* Section 2 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-            <div className="section_heading">
-              Top courses in {catalogPageData?.data?.differentCategory?.name}
-            </div>
-            <div className="py-8">
-              <CourseSlider
-                Courses={catalogPageData?.data?.differentCategory?.courses} 
-              />
-            </div>
-          </div>
-    
-          {/* Section 3 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
-            <div className="section_heading">Frequently Bought</div>
-            <div className="py-8">
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {catalogPageData?.data?.mostSellingCourses
-                  ?.slice(0, 4)
-                  .map((course, i) => (
-                    <CourseCard course={course} key={i} Height={"h-[400px]"} />
+                <h2 className="text-2xl md:text-3xl font-black mb-6 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                  Courses to get you started
+                </h2>
+                
+                <div className="flex border-b border-white/10 text-sm mb-6">
+                  <p
+                    className={`px-6 py-3 rounded-t-xl cursor-pointer font-semibold transition-all ${
+                      active === 1
+                        ? "text-yellow-400 bg-white/5"
+                        : "text-slate-300 hover:text-yellow-400"
+                    }`}
+                    onClick={() => setActive(1)}
+                    style={{
+                      borderBottom: active === 1 ? '2px solid rgba(234, 179, 8, 0.6)' : 'none',
+                    }}
+                  >
+                    Most Popular
+                  </p>
+                  <p
+                    className={`px-6 py-3 rounded-t-xl cursor-pointer font-semibold transition-all ${
+                      active === 2
+                        ? "text-yellow-400 bg-white/5"
+                        : "text-slate-300 hover:text-yellow-400"
+                    }`}
+                    onClick={() => setActive(2)}
+                    style={{
+                      borderBottom: active === 2 ? '2px solid rgba(234, 179, 8, 0.6)' : 'none',
+                    }}
+                  >
+                    New
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {catalogPageData?.data?.selectedCategory?.courses?.map((course, i) => (
+                    <CourseCard course={course} key={course._id || i} Height={"h-[300px]"} index={i} />
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Section 2 with Glassmorphism */}
+          
+    
+          {/* Section 3 with Glassmorphism */}
+          <div className="w-full px-4 md:px-6 lg:px-8 xl:px-12 relative z-10 py-8 pb-16">
+            <div className="max-w-7xl mx-auto">
+              <div 
+                className="p-6 md:p-8 rounded-3xl backdrop-blur-xl"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                }}
+              >
+                <h2 className="text-2xl md:text-3xl font-black mb-6 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent">
+                  Frequently Bought
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {catalogPageData?.data?.mostSellingCourses?.map((course, i) => (
+                    <CourseCard course={course} key={course._id || i} Height={"h-[300px]"} index={i} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
     
           <Footer />
-        </>
+        </div>
       )
     }
     

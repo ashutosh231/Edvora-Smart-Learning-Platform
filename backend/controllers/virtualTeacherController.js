@@ -49,6 +49,11 @@ export const createVideoJobController = async (req, res) => {
       return res.status(400).json({ error: "Script is required" });
     }
 
+    // Guard: missing API key
+    if (!process.env.DID_API_KEY) {
+      return res.status(500).json({ error: "DID_API_KEY is not set on the server" });
+    }
+
     if (typeof script !== "string") {
       if (script.input && typeof script.input === "string") {
         script = script.input;
@@ -91,7 +96,27 @@ export const createVideoJobController = async (req, res) => {
     });
   } catch (error) {
     console.error("Video job error:", error.response?.data || error.message );
-    return res.status(500).json({ error: error.response?.data || error.message || "Insufficient Credit"});
+    
+    // Check for insufficient credits error
+    const errorData = error?.response?.data;
+    const isCreditsError = errorData?.kind === 'InsufficientCreditsError' || 
+                          errorData?.description?.includes('not enough credits');
+    
+    if (isCreditsError) {
+      return res.status(402).json({ 
+        error: "D-ID account has insufficient credits. Please add credits to your D-ID account or update the API key.",
+        errorType: "INSUFFICIENT_CREDITS",
+        details: errorData?.description || "Not enough credits available",
+        suggestion: "Visit https://studio.d-id.com/ to add credits or create a new account"
+      });
+    }
+    
+    const msg =
+      error?.response?.data?.error ||
+      error?.response?.data?.message ||
+      error?.message ||
+      "D-ID API error";
+    return res.status(500).json({ error: msg, errorType: "API_ERROR" });
   }
 };
 

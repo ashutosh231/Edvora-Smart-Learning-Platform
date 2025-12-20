@@ -56,18 +56,19 @@ const Navbar = () => {
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         
         {/* Logo Section */}
-      <Link to="/" className="group flex items-center gap-3">
-  <div className="relative">
-    <img
-      src={logo}
-      width={200}
-      height={50}
-      loading="lazy"
-      alt="Edvora"
-      className="transition-all duration-300 group-hover:scale-105 filter brightness-0 invert opacity-90 group-hover:opacity-100"
-    />
-  </div>
-</Link>
+        <Link to="/" className="group flex items-center gap-3 navbar-logo">
+          <div className="relative logo-container">
+            <img
+              src={logo}
+              width={200}
+              height={50}
+              loading="lazy"
+              alt="Edvora"
+              className="logo-image transition-all duration-300 filter brightness-0 invert opacity-90 group-hover:opacity-100"
+            />
+            <div className="logo-glow"></div>
+          </div>
+        </Link>
 
         {/* Navigation Links */}
         <nav className="hidden lg:block">
@@ -75,67 +76,90 @@ const Navbar = () => {
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
-                  <div className="relative flex items-center gap-2 group cursor-pointer">
-                    <p className="font-medium text-richblack-100 group-hover:text-yellow-50 transition-all duration-300 transform group-hover:translate-y-[-1px]">
+                  <div className="relative flex items-center gap-2 group cursor-pointer catalog-trigger">
+                    <p className="font-medium text-richblack-100 group-hover:text-yellow-50 transition-all duration-300 catalog-text">
                       {link.title}
                     </p>
-                    <IoIosArrowDropdownCircle className="text-richblack-100 group-hover:text-yellow-50 transition-all duration-300 transform group-hover:rotate-180 group-hover:scale-110" />
+                    <IoIosArrowDropdownCircle className="text-richblack-100 group-hover:text-yellow-50 transition-all duration-300 catalog-arrow" />
 
-                    {/* Enhanced Dropdown */}
-                    <div className="absolute left-1/2 top-full mt-4 -translate-x-1/2 flex flex-col rounded-2xl bg-richblack-5 p-6 text-richblack-900 shadow-2xl 
-                                    transition-all duration-300 ease-out opacity-0 scale-95 invisible 
-                                    group-hover:visible group-hover:opacity-100 group-hover:scale-100 w-80 border border-richblack-100/50">
+                    {/* Invisible bridge to prevent dropdown from closing */}
+                    <div className="invisible absolute left-0 top-full h-4 w-full"></div>
+
+                    {/* Advanced Beautiful Dropdown */}
+                    <div className="absolute left-0 top-full mt-2 flex flex-col rounded-3xl catalog-dropdown p-6 text-richblack-900 shadow-2xl 
+                                    w-96 border border-yellow-400/20">
                       
-                      {/* Enhanced triangle pointer */}
-                      <div className="absolute left-1/2 -translate-x-1/2 -top-2 h-4 w-4 rotate-45 rounded-sm bg-richblack-5 border-t border-l border-richblack-100/50"></div>
+                      {/* Animated triangle pointer with glow - aligned with Catalog text */}
+                      <div className="absolute left-6 -top-2 h-4 w-4 rotate-45 rounded-sm catalog-pointer border-t border-l border-yellow-400/30"></div>
+
+                      {/* Background glow effect */}
+                      <div className="absolute inset-0 catalog-dropdown-glow rounded-3xl"></div>
+
+                      {/* Shimmer overlay */}
+                      <div className="absolute inset-0 catalog-shimmer rounded-3xl"></div>
 
                       <div className="relative z-10">
-                        <h3 className="text-lg font-bold text-richblack-800 mb-4 px-2 pb-3 border-b border-richblack-100">
-                          Explore Categories
-                        </h3>
+                        {/* Header with gradient */}
+                        <div className="mb-4 px-2 pb-3 border-b border-richblack-200/50 catalog-header">
+                          <h3 className="text-xl font-bold bg-gradient-to-r from-richblack-800 via-yellow-600 to-richblack-800 bg-clip-text text-transparent catalog-title">
+                            Explore Categories
+                          </h3>
+                        </div>
                         
                         {loading ? (
-                          <div className="flex items-center justify-center py-6">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500"></div>
+                          <div className="flex items-center justify-center py-8">
+                            <div className="catalog-loader"></div>
                           </div>
                         ) : subLinks.length ? (
-                          <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto custom-scrollbar pr-2">
+                          <div className="grid grid-cols-1 gap-2 max-h-80 overflow-y-auto custom-scrollbar pr-2">
                             {subLinks.map((sublink, idx) => (
                               <Link
                                 to={`/catalog/${sublink.name.replace(/\s+/g, '-').toLowerCase()}`}
                                 key={sublink._id || idx}
-                                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100 hover:text-richblack-900 transition-all duration-200 font-medium text-richblack-700 hover:shadow-md border border-transparent hover:border-yellow-200 group/category"
+                                className="catalog-item group/category"
                                 onClick={() => document.activeElement.blur()}
+                                style={{ animationDelay: `${idx * 0.03}s` }}
                               >
-                                <div className="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover/category:opacity-100 transition-opacity duration-200"></div>
-                                <span className="flex-1">{sublink.name}</span>
+                                {/* Background gradient */}
+                                <div className="catalog-item-bg"></div>
+                                
+                                {/* Icon indicator */}
+                                <div className="catalog-item-icon"></div>
+                                
+                                <span className="catalog-item-text">{sublink.name}</span>
+                                
+                                {/* Arrow indicator */}
+                                <div className="catalog-item-arrow">
+                                  <IoIosArrowDropdownCircle />
+                                </div>
                               </Link>
                             ))}
                           </div>
                         ) : (
-                          <div className="text-center py-6 text-richblack-400 text-sm">
-                            <div className="w-12 h-12 bg-richblack-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                              <span className="text-2xl">📚</span>
+                          <div className="text-center py-8 text-richblack-400 text-sm catalog-empty">
+                            <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-amber-100 rounded-full flex items-center justify-center mx-auto mb-3 catalog-empty-icon">
+                              <span className="text-3xl">📚</span>
                             </div>
-                            No categories available
+                            <p>No categories available</p>
                           </div>
                         )}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <Link to={link?.path} className="group/navlink relative">
+                  <Link to={link?.path} className="group/navlink relative nav-link">
                     <p
-                      className={`font-medium text-lg ${
+                      className={`font-medium text-lg nav-link-text ${
                         matchRoute(link?.path)
                           ? "text-yellow-50 font-semibold"
                           : "text-richblack-100"
-                      } group-hover/navlink:text-yellow-50 transition-all duration-300 relative overflow-hidden`}
+                      }`}
                     >
                       {link?.title}
-                      <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-50 to-amber-100 transition-all duration-300 group-hover/navlink:w-full ${
-                        matchRoute(link?.path) ? "w-full" : ""
-                      }`}></span>
+                      {/* Animated underline */}
+                      <span className={`nav-link-underline ${matchRoute(link?.path) ? "active" : ""}`}></span>
+                      {/* Glow effect */}
+                      <span className="nav-link-glow"></span>
                     </p>
                   </Link>
                 )}
@@ -147,30 +171,30 @@ const Navbar = () => {
         {/* Auth / Dashboard / Cart Section */}
         <div className="flex items-center gap-x-4">
           {user && user.accountType !== "Instructor" && (
-            <Link to="/dashboard/cart" className="relative group/cart">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-richblack-700 to-richblack-800 group-hover/cart:from-richblack-600 group-hover/cart:to-richblack-700 transition-all duration-300 shadow-lg border border-richblack-600 group-hover/cart:border-richblack-500">
+            <Link to="/dashboard/cart" className="relative group/cart navbar-cart">
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-richblack-700 to-richblack-800 group-hover/cart:from-richblack-600 group-hover/cart:to-richblack-700 transition-all duration-300 shadow-lg border border-richblack-600 group-hover/cart:border-richblack-500 cart-button">
                 <GrCart className="text-xl text-richblack-25 group-hover/cart:text-yellow-50 transition-colors duration-300" />
               </div>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white text-sm font-bold shadow-lg border-2 border-richblack-900 animate-pulse">
+                <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white text-sm font-bold shadow-lg border-2 border-richblack-900 cart-badge">
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
               )}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/0 to-purple-400/0 group-hover/cart:from-blue-400/10 group-hover/cart:to-purple-400/10 rounded-2xl transition-all duration-500 blur-sm group-hover/cart:blur-md"></div>
+              <div className="absolute inset-0 cart-glow rounded-2xl"></div>
             </Link>
           )}
 
           {token === null && (
             <div className="flex gap-x-4">
               <Link to="/login">
-                <button className="px-8 py-3 rounded-2xl bg-gradient-to-br from-richblack-700 to-richblack-800 text-richblack-25 border border-richblack-600 hover:from-richblack-600 hover:to-richblack-700 hover:border-richblack-500 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <button className="px-8 py-3 rounded-2xl bg-gradient-to-br from-richblack-700 to-richblack-800 text-richblack-25 border border-richblack-600 hover:from-richblack-600 hover:to-richblack-700 hover:border-richblack-500 transition-all duration-300 font-medium shadow-lg hover:shadow-xl navbar-btn navbar-btn-secondary">
                   Log in
                 </button>
               </Link>
 
               <Link to="/signup">
-                <button className="px-8 py-3 rounded-2xl bg-gradient-to-r from-yellow-50 to-amber-100 text-richblack-900 font-semibold hover:from-yellow-100 hover:to-amber-200 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 hover:scale-105">
-                  Sign up
+                <button className="px-8 py-3 rounded-2xl bg-gradient-to-r from-yellow-50 to-amber-100 text-richblack-900 font-semibold hover:from-yellow-100 hover:to-amber-200 hover:text-richblack-900 transition-all duration-300 shadow-lg hover:shadow-xl navbar-btn navbar-btn-primary">
+                  <span className="relative z-10">Sign up</span>
                 </button>
               </Link>
             </div>

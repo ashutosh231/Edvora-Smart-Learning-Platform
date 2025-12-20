@@ -21,6 +21,8 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
+  GET_PROGRESS_PERCENTAGE_API,
+  CLAIM_CERTIFICATE_API,
 } = courseEndpoints
 
 export const getAllCourses = async () => {
@@ -384,4 +386,56 @@ export const createRating = async (data, token) => {
   }
   toast.dismiss(toastId)
   return success
+}
+
+// get course progress percentage
+export const getProgressPercentage = async (courseId, token) => {
+  let result = null
+  try {
+    const response = await apiConnector(
+      "POST",
+      GET_PROGRESS_PERCENTAGE_API,
+      { courseId },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+    console.log("GET_PROGRESS_PERCENTAGE_API RESPONSE............", response)
+    if (!response?.data?.success) {
+      console.error("Error response:", response?.data)
+      return null
+    }
+    result = response?.data
+  } catch (error) {
+    console.error("GET_PROGRESS_PERCENTAGE_API ERROR............", error)
+    toast.error(error?.message || "Failed to fetch progress")
+  }
+  return result
+}
+
+// claim course certificate
+export const claimCourseCertificate = async (courseId, token) => {
+  let result = null
+  const toastId = toast.loading("Claiming certificate...")
+  try {
+    const response = await apiConnector(
+      "POST",
+      CLAIM_CERTIFICATE_API,
+      { courseId },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+    console.log("CLAIM_CERTIFICATE_API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message || "Could not claim certificate")
+    }
+    toast.success("Certificate claimed successfully!")
+    result = response?.data
+  } catch (error) {
+    console.log("CLAIM_CERTIFICATE_API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
 }

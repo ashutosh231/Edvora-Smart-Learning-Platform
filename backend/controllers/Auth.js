@@ -1,20 +1,12 @@
-// const OTP = require("../models/OTP")
+
 import OTP from "../models/OTP.js";
-// const Profile = require("../models/Profile")
 import Profile from "../models/Profile.js"
-// const User = require("../models/User")
 import User from "../models/User.js"
-// const bcrypt = require("bcryptjs")
-// import bcrypt from "bcryptjs"
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv"
-// const jwt = require("jsonwebtoken")
 import jwt from "jsonwebtoken"
-// const mailSender = require("../utils/mailSender")
 import mailSender from "../utils/mailSender.js"
-// const otpGenerator = require("otp-generator")
 import otpGenerator from "otp-generator"
-// const { passwordUpdated } = require("../mail/templates/passwordUpdate")
 import { passwordUpdated } from "../mail/templates/passwordUpdate.js"
 
 dotenv.config()
@@ -30,7 +22,6 @@ export const sendotp = async (req, res) => {
     // Find user with provided email
     const checkUserPresent = await User.findOne({ email })
     // to be used in case of signup
-
     // If user found with provided email
     if (checkUserPresent) {
       // Return 401 Unauthorized status code with error message
@@ -64,7 +55,7 @@ export const sendotp = async (req, res) => {
     })
   } catch (error) {
     console.log(error.message)
-    return res.status(500).json({ success: false, error: error.message })
+    return res.status(500).json({ success: false, error: error.message})
   }
 }
 // export const testing = 

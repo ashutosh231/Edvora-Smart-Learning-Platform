@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 
 import CourseReviewModal from "../components/core/ViewCourse/CourseReviewModal"
+import CertificateModal from "../components/core/ViewCourse/CertificateModal"
 import VideoDetailsSidebar from "../components/core/ViewCourse/VideoDetailSidebar"
 import { getFullDetailsOfCourse } from "../services/operations/courseDetailsAPI"
 
@@ -17,6 +18,7 @@ export default function ViewCourse() {
   const { token } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const [reviewModal, setReviewModal] = useState(false)
+  const [showCertificateModal, setShowCertificateModal] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -37,7 +39,10 @@ export default function ViewCourse() {
   return (
     <>
       <div className="relative flex min-h-[calc(100vh-3.5rem)]">
-        <VideoDetailsSidebar setReviewModal={setReviewModal} />
+        <VideoDetailsSidebar 
+          setReviewModal={setReviewModal} 
+          setShowCertificateModal={setShowCertificateModal}
+        />
         <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
           <div className="mx-6">
             <Outlet />
@@ -45,6 +50,12 @@ export default function ViewCourse() {
         </div>
       </div>
       {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}
+      {showCertificateModal && (
+        <CertificateModal 
+          isOpen={showCertificateModal} 
+          setIsOpen={setShowCertificateModal} 
+        />
+      )}
     </>
   )
 }

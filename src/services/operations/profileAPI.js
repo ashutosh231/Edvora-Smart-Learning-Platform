@@ -96,7 +96,7 @@ export async function getInstructorData(token) {
   let result = [];
   // console.log("Prinfvudfnvdf df",token);
   try{
-    const response = await apiConnector("GET", profileEndpoints.GET_INSTRUCTOR_DATA_API, null, 
+    const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, 
     {
       Authorization: `Bearer ${token}`,
     })

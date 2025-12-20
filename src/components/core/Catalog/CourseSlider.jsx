@@ -20,7 +20,7 @@ const CourseSlider = ({ Courses, title, subtitle }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="relative py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-richblack-900 via-richblack-800 to-richblack-900"
+      className="relative py-6"
     >
       
       {/* Header Section */}
@@ -107,13 +107,37 @@ const CourseSlider = ({ Courses, title, subtitle }) => {
             ))}
           </Swiper>
 
-          {/* Custom Navigation Arrows */}
-          <button className="course-swiper-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 group p-3 rounded-xl bg-richblack-700 border border-richblack-600 text-richblack-200 hover:text-white hover:border-yellow-500 transition-all duration-200">
+          {/* Enhanced Custom Navigation Arrows with Glassmorphism */}
+          <motion.button 
+            className="course-swiper-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 group p-3 rounded-xl backdrop-blur-xl text-white transition-all duration-200"
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 4px 16px 0 rgba(31, 38, 135, 0.2)',
+            }}
+            whileHover={{ 
+              scale: 1.1,
+              borderColor: 'rgba(234, 179, 8, 0.5)',
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            }}
+          >
             <FiArrowRight className="text-xl" />
-          </button>
-          <button className="course-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 group p-3 rounded-xl bg-richblack-700 border border-richblack-600 text-richblack-200 hover:text-white hover:border-yellow-500 transition-all duration-200">
+          </motion.button>
+          <motion.button 
+            className="course-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 group p-3 rounded-xl backdrop-blur-xl text-white transition-all duration-200"
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 4px 16px 0 rgba(31, 38, 135, 0.2)',
+            }}
+            whileHover={{ 
+              scale: 1.1,
+              borderColor: 'rgba(234, 179, 8, 0.5)',
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            }}
+          >
             <FiArrowLeft className="text-xl" />
-          </button>
+          </motion.button>
         </div>
       ) : (
         <motion.div 

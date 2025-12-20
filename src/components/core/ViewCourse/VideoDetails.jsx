@@ -31,6 +31,7 @@ const VideoDetails = () => {
   const [videoEnded, setVideoEnded] = useState(false)
   const [loading, setLoading] = useState(false)
   const [isVideoLoading, setIsVideoLoading] = useState(true)
+  const [completionPercentage, setCompletionPercentage] = useState(0)
 
   useEffect(() => {
     const initializeVideoData = async () => {
@@ -54,6 +55,17 @@ const VideoDetails = () => {
         setPreviewSource(courseEntireData.thumbnail)
         setVideoEnded(false)
         setIsVideoLoading(false)
+        
+        // Calculate completion percentage
+        if (courseSectionData && courseSectionData.length > 0) {
+          const totalVideos = courseSectionData.reduce((sum, section) => {
+            return sum + (section.Subsection?.length || 0)
+          }, 0)
+          if (totalVideos > 0) {
+            const percentage = Math.round((completedLectures.length / totalVideos) * 100)
+            setCompletionPercentage(percentage)
+          }
+        }
       } catch (error) {
         console.error("Error initializing video data:", error)
         setIsVideoLoading(false)
@@ -175,6 +187,24 @@ const VideoDetails = () => {
 
   return (
     <div className="flex flex-col gap-6 text-white">
+      {/* Course Progress Indicator */}
+      <div className="bg-richblack-700 rounded-lg p-4 space-y-2 border border-richblack-600">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-semibold text-richblack-200">
+            Course Progress
+          </span>
+          <span className="text-lg font-bold text-yellow-400">
+            {completionPercentage}%
+          </span>
+        </div>
+        <div className="w-full bg-richblack-600 rounded-full h-2 overflow-hidden">
+          <div
+            className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-full rounded-full transition-all duration-500"
+            style={{ width: `${completionPercentage}%` }}
+          ></div>
+        </div>
+      </div>
+
       {/* Video Player Section */}
       <div className="relative rounded-2xl overflow-hidden bg-richblack-900 shadow-2xl">
         {isVideoLoading && (

@@ -10,7 +10,6 @@ import express from "express";
 import fileUpload from "express-fileupload";
 import paymentRoutes from "./routes/Payment.js";
 import profileRoutes from "./routes/Profile.js";
-import serverless from "serverless-http";
 import tutorRoutes from "./routes/tutorRoutes.js";
 import userRoutes from "./routes/User.js";
 
@@ -22,12 +21,9 @@ const PORT = process.env.PORT || 4000;
 connect();
 
 // ---------------- ✅ FIXED GLOBAL CORS ----------------
-// ⚠️ REMOVE ALL MANUAL res.header CORS CODE
+// ⚠️ REMOVE ALL MANCORS ----------------
 const allowedOrigins = [
   "http://localhost:3000",
-  // "http://localhost:3000/",
-  "https://edvora-beryl.vercel.app", // deployed frontend (Vercel)
-];
 
 app.use(
   cors({
@@ -76,6 +72,4 @@ app.get("/", (req, res) => {
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => console.log(`✅ Running locally on port ${PORT}`));
 }
-
-// ---------------- Export for Serverless ----------------
-export const handler = serverless(app);
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`)

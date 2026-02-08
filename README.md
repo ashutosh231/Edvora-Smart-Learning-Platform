@@ -1,7 +1,5 @@
 #  Edvora — EdTech Platform
 
-🚀 Live site: https://edvora-beryl.vercel.app
-
 A full-stack EdTech platform for creating, consuming, and rating educational content. StudyNotion (Edvora) combines a React front-end, Node/Express back-end, and MongoDB to deliver a fast, responsive learning experience — including an AI-powered virtual teacher.
 
 ---

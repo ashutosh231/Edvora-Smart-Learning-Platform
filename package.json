@@ -43,7 +43,6 @@
     "react-super-responsive-table": "^5.2.3",
     "react-type-animation": "^3.2.0",
     "redux-toolkit": "^1.1.2",
-    "serverless-http": "^4.0.0",
     "swiper": "^9.4.1",
     "type-animation": "^0.1.5",
     "video-react": "^0.16.0",

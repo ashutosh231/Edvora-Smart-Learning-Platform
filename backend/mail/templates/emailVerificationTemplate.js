@@ -185,7 +185,7 @@ const otpTemplate = (otp) => {
 	<body>
 		<div class="container">
 			<div class="header">
-				<a href="https://edvora-beryl.vercel.app/">
+				<a href="http://localhost:3000/">
 					<img class="logo" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Edvora Logo">
 				</a>
 				<h1 class="title">Account Verification</h1>

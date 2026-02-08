@@ -1,0 +1,29 @@
+[build]
+  command = "cd backend && npm install && cd .. && CI=false npm run build"
+  publish = "build"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["backend/**"]
+
+[functions."api"]
+  external_node_modules = ["bcrypt"]
+
+# Environment
+[build.environment]
+  NODE_ENV = "production"
+  REACT_APP_BASE_URL = "/api/v1"
+
+# ── API redirects: proxy /api/* to the serverless function ──
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/api/:splat"
+  status = 200
+  force = true
+
+# ── SPA fallback: serve index.html for all other routes ──
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

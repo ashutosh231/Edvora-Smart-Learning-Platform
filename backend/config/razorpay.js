@@ -35,15 +35,9 @@
 
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url"; // ✅ required for __dirname in ES module
-import path from "path";
 
-// ✅ define __dirname manually (ESM fix)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// ✅ Load .env file
-dotenv.config({ path: path.join(__dirname, "../.env") });
+// Load .env (no-op if env vars set externally, e.g. Netlify)
+dotenv.config();
 
 // Debug logs (optional)
 console.log("🔹 Razorpay Config Loaded");

@@ -8,7 +8,6 @@ const BASE_URL = rawBase.replace(/\/+$/, "");
 console.log("Normalized API BASE URL: ",BASE_URL);
 
 export const axiosInstance = axios.create({
-  baseURL: BASE_URL,
   withCredentials: true,
 });
 

@@ -19,7 +19,7 @@ export const auth = async (req, res, next) => {
         message: "Token is missing or malformed",
       });
     }
-2
+
     const token = authHeader.split(" ")[1]; // Extract actual token
 
     // Verify token
@@ -73,34 +73,30 @@ export const isAdmin = async (req, res, next) => {
 	}
 };
 //Todo
-export const isTester = async({req,res,next}) =>{
-	try{
-		const userDetails = await User.findOne({email:req.user.email})
+export const isTester = async (req, res, next) => {
+	try {
+		const userDetails = await User.findOne({ email: req.user.email });
 
-		if(!userDetails){
-			res.statau(400).json({
+		if (!userDetails) {
+			return res.status(400).json({
 				success: false,
-				message: "User not found"
-			})
+				message: "User not found",
+			});
 		}
-		if(userDetails.accountType !=="Tester"){
+		if (userDetails.accountType !== "Tester") {
 			return res.status(401).json({
 				success: false,
-				message: "You are not authorize as Tester kindly contact admin"
-			})
+				message: "You are not authorized as Tester, kindly contact admin",
+			});
 		}
-
-
-	}
-	catch(err){
-		res.status(500).json({
+		next();
+	} catch (err) {
+		return res.status(500).json({
 			success: false,
-			message: "User Role is not verified as Tester"
-		})
-		
+			message: "User Role is not verified as Tester",
+		});
 	}
-
-}
+};
 export const isInstructor = async (req, res, next) => {
 	try {
 		const userDetails = await User.findOne({ email: req.user.email });

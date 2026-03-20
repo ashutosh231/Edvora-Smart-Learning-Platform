@@ -10,7 +10,6 @@ import express from "express";
 import fileUpload from "express-fileupload";
 import paymentRoutes from "./routes/Payment.js";
 import profileRoutes from "./routes/Profile.js";
-import serverless from "serverless-http";
 import tutorRoutes from "./routes/tutorRoutes.js";
 import userRoutes from "./routes/User.js";
 
@@ -43,6 +42,7 @@ app.use(
 
 // ---------------- Middlewares ----------------
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   fileUpload({
@@ -70,11 +70,5 @@ app.get("/", (req, res) => {
   });
 });
 
-// ---------------- Local Dev Server ----------------
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
-}
-
-// ---------------- Export for Netlify Functions ----------------
-export const handler = serverless(app);
-export default app;
+// ---------------- Start Server ----------------
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

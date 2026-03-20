@@ -1,38 +1,3 @@
-// // const Razorpay = require("razorpay");
-// // exports.instance = new Razorpay({
-// //   key_id: process.env.RAZORPAY_KEY_ID,
-// //   key_secret: process.env.RAZORPAY_SECRET,
-// // });
-
-// // backend/config/razorpay.js
-// // const Razorpay = require("razorpay");
-// import Razorpay from "razorpay";
-// // const dotenv = require("dotenv");
-// import dotenv from "dotenv";
-// // const path = require("path");
-// import path from "path";
-
-// // ✅ Force load .env manually before anything else
-// // dotenv.config({ path: path.join(__dirname, "../.env") });
-// dotenv.config({ path: path.join(__dirname, "../.env") });
-
-
-// // Debug logs (you can remove later)
-// console.log("🔹 Razorpay Config Loaded");
-// console.log("RAZORPAY_KEY_ID:", process.env.RAZORPAY_KEY_ID);
-// console.log("RAZORPAY_SECRET:", process.env.RAZORPAY_SECRET ? "Loaded ✅" : "Missing ❌");
-
-// // ✅ Throw a clear error if keys are missing
-// if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_SECRET) {
-//   throw new Error("❌ RAZORPAY_KEY_ID or RAZORPAY_SECRET missing in .env file");
-// }
-
-// // ✅ Create Razorpay instance
-// export const instance = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_SECRET,
-// });
-
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
 

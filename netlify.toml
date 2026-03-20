@@ -4,9 +4,8 @@
 
 [build.environment]
   NODE_ENV = "production"
-  # NOTE: Once deployed to Render, update this URL in your Netlify Environment
-  # Variables settings, or directly here in netlify.toml
-  REACT_APP_BASE_URL = "https://your-backend-app.onrender.com/api/v1"
+  # Environment variables for the frontend build
+  REACT_APP_BASE_URL = "https://edvora-smart-learning-platform-1.onrender.com/api/v1"
 
 # ── SPA fallback: serve index.html for all other routes ──
 [[redirects]]

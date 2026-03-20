@@ -23,6 +23,7 @@ connect();
 // ---------------- CORS ----------------
 const allowedOrigins = [
   "http://localhost:3000",
+  "https://edvora-smart-learning.netlify.app",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 

@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_ENV = "production"
+  CI = "false"
   # Environment variables for the frontend build
   REACT_APP_BASE_URL = "https://edvora-smart-learning-platform-1.onrender.com/api/v1"
 

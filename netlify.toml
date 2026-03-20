@@ -6,6 +6,7 @@
   NODE_ENV = "production"
   CI = "false"
   # Environment variables for the frontend build
+  REACT_APP_RAZORPAY_KEY = "rzp_test_SR71TBFSGMIJHy"
   REACT_APP_BASE_URL = "https://edvora-smart-learning-platform-1.onrender.com/api/v1"
 
 # ── SPA fallback: serve index.html for all other routes ──

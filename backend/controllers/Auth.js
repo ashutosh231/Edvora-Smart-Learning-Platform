@@ -48,6 +48,13 @@ export const sendotp = async (req, res) => {
     const otpPayload = { email, otp }
     const otpBody = await OTP.create(otpPayload)
     console.log("OTP Body", otpBody)
+    // Send OTP email
+    await mailSender(
+      email,
+      "Verification Email from Edvora",
+      `<h1>Please confirm your OTP</h1>
+       <p>Here is your OTP code: ${otp}</p>`
+    );
     res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,

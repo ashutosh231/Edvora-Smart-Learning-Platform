@@ -24,6 +24,8 @@ connect();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://edvora-smart-learning.netlify.app",
+  "https://edvora-learning.netlify.app",
+  "https://edvora-learning.netlify.app/",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 

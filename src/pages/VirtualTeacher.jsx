@@ -29,9 +29,10 @@ export default function VirtualTeacher() {
     setComments([]);
 
     try {
+      const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:4000/api/v1";
       // STEP 1: Generate Script
       const scriptRes = await axios.post(
-        "http://localhost:4000/api/v1/tutor/script",
+        `${BASE_URL}/tutor/script`,
         { topic }
       );
 
@@ -41,7 +42,7 @@ export default function VirtualTeacher() {
 
       // STEP 2: Create video job (D-ID)
       const videoRes = await axios.post(
-        "http://localhost:4000/api/v1/tutor/video",
+        `${BASE_URL}/tutor/video`,
         { script }
       );
 
@@ -55,7 +56,7 @@ export default function VirtualTeacher() {
         pollCount++;
         try {
           const statusRes = await axios.get(
-            `http://localhost:4000/api/v1/tutor/video-status/${jobId}`
+            `${BASE_URL}/tutor/video-status/${jobId}`
           );
 
           const { status, videoUrl } = statusRes.data;
